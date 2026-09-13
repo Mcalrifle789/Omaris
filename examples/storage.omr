@@ -1,0 +1,40 @@
+# storage.omr — the core Omaris idea: instructions as storage containers.
+# store.fun.;start IS the storage unit: every line beneath it is absorbed
+# into the container, its tracked weight resets to 0, and the code remains.
+
+# Storage working on the local device:
+store.fun.:(open)
+
+store.fun.;start archive /capacity:GB(1)
+  let note = "these lines were absorbed into the 'archive' container"
+  out "running captured code from inside storage"
+end
+
+store.fun.;status archive
+
+# Hidden sub-storage: pockets inside the container's own storage.
+pocket:add archive cold
+pocket:put archive cold gem = "secret payload"
+pocket:put archive cold key = 4242
+
+# Distribution of valued items to another system:
+store.fun.;start vault /capacity:Infinite
+tr.fun.:(dist.; value) "shipped item from another system" -> vault
+end
+
+# Distribution of items (pockets) from one container to another:
+tr.fun.:(dist.) archive -> vault
+
+# Code shifting between hidden pockets resets the tracked weight on both ends:
+pocket:add vault deep
+pocket:move vault cold deep gem
+
+store.fun.;status archive
+store.fun.;status vault
+
+# Storage working on a host:
+store.fun.:(closed)
+
+# Re-run code that lives inside the container:
+store.fun.;run archive
+store.fun.;status archive

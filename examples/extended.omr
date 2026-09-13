@@ -1,0 +1,68 @@
+# extended.omr — the Omaris Extended Edition: all six function starters.
+# fun. (code functions) / deb. (agentic) / aud. (code->sound) /
+# edm. (LLM & code control) / oma. (app + web + audio) / fun.ag (AI agents)
+
+# ---------- fun. — text rendering with position, style, animation ----------
+text.set-style/(bold)
+fun.text/print("Hello from the Extended Edition")/(2000 × 1500)
+
+text.rainbowpalette/animation
+text.animation/set animation
+fun.text/print("OMARIS")/(1200 × 800)
+
+# ---------- oma. — app building ----------
+oma.:appbuild/start notes-app
+oma.://app/next notes-app
+oma.://app/next notes-app
+oma.://app/cache notes-app      # caches the entire app into a storage container
+oma.://app/pause notes-app
+oma.://app/next notes-app       # next while paused resumes the build
+
+# Multiple apps at once (trailing dot):
+oma.:appbuild/start. todo weather
+
+# ---------- oma. — website building pipeline ----------
+oma.://webbuild/start portfolio
+oma.://web/auth cdn.example.com
+oma.://web/format;start portfolio
+oma.://web/design-format;start portfolio
+oma.://web/design; find-design-skill minimal
+oma.://web/next portfolio
+oma.://web/end portfolio
+
+# ---------- edm. — LLM & code control ----------
+def.fun..:(telemetry)
+  out "telemetry running"
+end
+
+edm.:next/stop telemetry
+# telemetry()               <- calling it now errors: code is not live
+edm.:next/resume telemetry
+telemetry()
+
+store.fun.:(open)
+store.fun.;start code_locker /capacity:GB(1)
+end
+edm.:next/transition telemetry -> code_locker
+
+# ---------- aud. — converting code into sound ----------
+aud.:tone beep/(440; 300)
+aud.:tone hum/(220; 500)
+oma.://music;audio//(combine-audio-file) beep hum -> chord
+oma.://music;audio//(enhance) chord
+oma.://music;audio/(set-loop) chord 2
+oma.://music;audio//(reverb) chord = SET INTENSITY 35
+aud.:play chord "omaris-chord.wav"
+
+# ---------- fun.ag — AI agents & automation ----------
+fun.ag.://agent fetcher
+fun.ag.://agentflow. fetcher
+  out "agent step 1: gathering sources"
+  out "agent step 2: packaging results"
+end
+fun.ag.://agentflow;x = 5
+fun.ag.://agentflow;work-speed-x = 2
+fun.ag.://agent;start fetcher
+
+# The NOTICE rule: work speed must be less than power.
+# fun.ag.://agentflow;work-speed-x = 9   <- would error: 9 >= 5

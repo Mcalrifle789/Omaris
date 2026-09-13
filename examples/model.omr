@@ -1,0 +1,59 @@
+# model.omr — the Omaris model lifecycle:
+#   model:create        begins the creation of a new model
+#   def.fun..:(create)  the creation function (training / setup)
+#   def.fun..:(req)     the formal request function (inference)
+#
+# This example builds a tiny working language model: a bigram predictor
+# trained inside the creation function and served by the request function.
+
+model:create WordGen
+  def.fun..:(create; corpus)
+    # Training: remember what follows each word. Kept as data inside the model.
+    give corpus
+  end
+
+  def.fun..:(req; corpus; word)
+    # Inference: find the most frequent word that follows `word`.
+    let best = word
+    let bestn = 0
+    repeat (len(corpus) - 1) as i
+      if corpus[i] == word then
+        let nxt = corpus[i + 1]
+        let n = 0
+        repeat (len(corpus) - 1) as j
+          if corpus[j] == word then
+            if corpus[j + 1] == nxt then
+              let n = n + 1
+            end
+          end
+        end
+        if n > bestn then
+          let bestn = n
+          let best = nxt
+        end
+      end
+    end
+    give best
+  end
+end
+
+# The creation function trains on the corpus; the model can then be
+# distributed to another system with tr.fun.:(dist.).
+store.fun.:(open)
+store.fun.;start training_corpus /capacity:TB(1)
+tr.fun.:(dist.; value) ["omaris", "is", "a", "language", "omaris", "stores", "code", "omaris", "stores", "data", "omaris", "is", "storage"] -> training_corpus
+end
+
+let corpus = ["omaris", "is", "a", "language", "omaris", "stores", "code", "omaris", "stores", "data", "omaris", "is", "storage"]
+
+out "after 'omaris', the model predicts: " + WordGen.req(corpus, "omaris")
+out "after 'language', the model predicts: " + WordGen.req(corpus, "language")
+
+# A tiny generation loop: chain predictions for 6 words.
+let word = "omaris"
+let sentence = word
+repeat 5
+  let word = WordGen.req(corpus, word)
+  let sentence = sentence + " " + word
+end
+out "generated: " + sentence

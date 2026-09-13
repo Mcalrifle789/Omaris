@@ -1,0 +1,30 @@
+# hello.omr — Omaris basics: output, variables, calculus, control flow, functions
+
+out "Hello from Omaris!"
+
+# Native calculus: integrals accumulate, derivatives measure change.
+let series = [2, 4, 6, 8]
+out "series:        [2, 4, 6, 8]"
+out "∫  (cumulative): " + str(∫ series)
+out "∫∫ (repeated):   " + str(∫∫ series)
+out "ẏ  (rate):       " + str(ẏ series)
+out "ÿ  (accel):      " + str(ÿ series)
+
+# Control flow
+let total = sum(series)
+if total > 15 then
+  out "total " + str(total) + " is big"
+else
+  out "total " + str(total) + " is small"
+end
+
+repeat 3 as i
+  out "loop pass " + str(i)
+end
+
+# Functions defined with the Omaris instruction set
+def.fun..:(double; x)
+  give x * 2
+end
+
+out "double(21) = " + str(double(21))
