@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "omaris-language"
+version = "0.2.0"
+description = "Omaris — a programming language where instructions are storage containers. Core edition + Extended Edition (AI agents, apps, websites, audio)."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "Mcalrifle789" }]
+keywords = ["omaris", "programming-language", "interpreter", "ai", "storage"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Compilers",
+]
+
+[project.scripts]
+omaris = "omaris:main"
+
+[tool.setuptools]
+py-modules = ["omaris"]

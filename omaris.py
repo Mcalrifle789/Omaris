@@ -24,7 +24,7 @@ import re
 import sys
 import urllib.parse
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 
 class OmarisError(Exception):
@@ -1212,7 +1212,19 @@ def repl():
             print("Omaris error: %s" % e)
 
 
-def main(argv):
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
+    if len(argv) >= 2 and argv[1] in ('--version', '-v'):
+        print("Omaris %s" % VERSION)
+        return 0
+    if len(argv) >= 2 and argv[1] in ('--help', '-h'):
+        print("Omaris %s — a language where instructions are storage containers" % VERSION)
+        print("\nUsage:")
+        print("  omaris <program.omr>   run an Omaris program")
+        print("  omaris                 start the interactive REPL")
+        print("  omaris --version       show the version")
+        return 0
     try:
         sys.stdout.reconfigure(encoding='utf-8', errors='replace')
     except Exception:

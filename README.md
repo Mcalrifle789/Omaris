@@ -4,6 +4,32 @@ A programming language where **instructions are storage containers** — code an
 
 Built from scratch: `omaris.py` is a complete lexer → parser → tree-walking evaluator, standard library only. No host-language tricks, no wrapping.
 
+## Install
+
+Requires Python 3.8+. Install straight from GitHub:
+
+```
+pip install git+https://github.com/Mcalrifle789/Omaris.git
+```
+
+Or clone and install locally:
+
+```
+git clone https://github.com/Mcalrifle789/Omaris.git
+cd Omaris
+pip install .
+```
+
+Then the `omaris` command is available everywhere:
+
+```
+omaris --version
+omaris examples\hello.omr
+omaris          # interactive REPL
+```
+
+No dependencies — Omaris is pure Python standard library.
+
 ## Quick start
 
 ```
